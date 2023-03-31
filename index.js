@@ -11,20 +11,22 @@ const gravity = .7;
 class Sprite {
     //pass through arguments to constructor as a single object
     //so no order is required nor is either argument
-    constructor({position, velocity}) {
+    constructor({position, velocity, color}) {
         this.position = position;
         this.velocity = velocity;
+        this.width = 50;
         this.height = 150;
         this.lastKey;
         this.attackBox = {
             position: this.position,
             width: 100,
             height: 50
-        }
+        };
+        this.color = color;
     }
     draw() {
-        c.fillStyle = 'red';
-        c.fillRect(this.position.x, this.position.y, 50, this.height);
+        c.fillStyle = this.color;
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
 
         //attack box
         c.fillStyle = 'green';
@@ -51,7 +53,8 @@ const player = new Sprite({
     velocity : {
         x: 0,
         y: 0
-    }
+    },
+    color: 'red'
 });
 
 const enemy = new Sprite({
@@ -62,7 +65,8 @@ const enemy = new Sprite({
     velocity : {
         x: 0,
         y: 0
-    }
+    },
+    color: 'blue'
 });
 
 
@@ -107,6 +111,14 @@ function animate() {
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
     }
+
+    //hit detection
+    if (player.attackBox.position.x + player.attackBox.width >= enemy.position.x && 
+        player.attackBox.position.x <= enemy.position.x + enemy.width &&
+        player.attackBox.position.y + player.attackBox.height >= enemy.position.y &&
+        player.attackBox.position.y <= enemy.position.y + enemy.height) {
+        console.log('hit!!!');
+    }
  };
 
 animate();
@@ -148,18 +160,12 @@ window.addEventListener('keyup', (event) => {
         case 'a':
             keys.a.pressed = false;
         break
-        case 'w':
-            keys.w.pressed = false;
-        break
 
         case 'ArrowRight':
             keys.ArrowRight.pressed = false;
         break
         case 'ArrowLeft':
             keys.ArrowLeft.pressed = false;
-        break
-        case 'ArrowUp':
-            keys.ArrowUp.pressed = false;
         break
     }
     console.log(event.key);
