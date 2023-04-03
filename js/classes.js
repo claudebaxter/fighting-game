@@ -126,7 +126,7 @@ class Sprite {
     }
   
     attack() {
-      this.switchSprite('attack1')
+      this.switchSprite('attack2')
       this.isAttacking = true
     }
   
@@ -147,8 +147,8 @@ class Sprite {
   
       // overriding all other animations with the attack animation
       if (
-        this.image === this.sprites.attack1.image &&
-        this.framesCurrent < this.sprites.attack1.framesMax - 1
+        this.image === this.sprites.attack2.image &&
+        this.framesCurrent < this.sprites.attack2.framesMax - 1
       )
         return
   
@@ -190,10 +190,10 @@ class Sprite {
           }
           break
   
-        case 'attack1':
-          if (this.image !== this.sprites.attack1.image) {
-            this.image = this.sprites.attack1.image
-            this.framesMax = this.sprites.attack1.framesMax
+        case 'attack2':
+          if (this.image !== this.sprites.attack2.image) {
+            this.image = this.sprites.attack2.image
+            this.framesMax = this.sprites.attack2.framesMax
             this.framesCurrent = 0
           }
           break
